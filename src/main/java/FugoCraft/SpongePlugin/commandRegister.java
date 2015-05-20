@@ -21,12 +21,12 @@ public class commandRegister {
 
 		CommandSpec healCommandSpec = CommandSpec
 				.builder()
-				.setDescription(Texts.of("Heals a target player."))
-				.setExtendedDescription(
+				.description(Texts.of("Heals a target player."))
+				.extendedDescription(
 						Texts.of(" If no target player is specified it will heal the commmand excecutor."))
-				.setExecutor(new commandExeHeal())
-				.setPermission("fugocraft.command.heal")
-				.setArguments(
+				.executor(new commandExeHeal())
+				.permission("fugocraft.command.heal")
+				.arguments(
 						GenericArguments.onlyOne(GenericArguments
 								.playerOrSource(Texts.of("target"), get().game)))
 				.build();
@@ -40,12 +40,12 @@ public class commandRegister {
 
 		CommandSpec feedCommandSpec = CommandSpec
 				.builder()
-				.setDescription(Texts.of("Feeds a target player."))
-				.setExtendedDescription(
+				.description(Texts.of("Feeds a target player."))
+				.extendedDescription(
 						Texts.of(" If no target player is specified it will feed the commmand excecutor."))
-				.setExecutor(new commandExeFeed())
-				.setPermission("fugocraft.command.feed")
-				.setArguments(
+				.executor(new commandExeFeed())
+				.permission("fugocraft.command.feed")
+				.arguments(
 						GenericArguments.onlyOne(GenericArguments
 								.playerOrSource(Texts.of("target"), get().game)))
 				.build();
