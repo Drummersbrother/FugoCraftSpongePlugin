@@ -21,6 +21,7 @@ public class commandRegister {
 		// TODO when registering commands, put the method call here
 		commandHealReg();
 		commandFeedReg();
+		
 	}
 	
 	public static void commandHealReg() {
