@@ -25,6 +25,7 @@ public class commandRegister {
 				.setExtendedDescription(
 						Texts.of(" If no target player is specified it will heal the commmand excecutor."))
 				.setExecutor(new commandExeHeal())
+				.setPermission("fugocraft.command.heal")
 				.setArguments(
 						GenericArguments.onlyOne(GenericArguments
 								.playerOrSource(Texts.of("target"), get().game)))
@@ -43,6 +44,7 @@ public class commandRegister {
 				.setExtendedDescription(
 						Texts.of(" If no target player is specified it will feed the commmand excecutor."))
 				.setExecutor(new commandExeFeed())
+				.setPermission("fugocraft.command.feed")
 				.setArguments(
 						GenericArguments.onlyOne(GenericArguments
 								.playerOrSource(Texts.of("target"), get().game)))
