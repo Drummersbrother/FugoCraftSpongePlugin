@@ -24,7 +24,7 @@ public class FugoCraft_Main {
 	public PluginManager pluginManager;
 	
 	public String PluginID = "fugocraftserver";
-
+	
 	public PluginManager getPluginManager() {
 		return pluginManager;
 	}
@@ -35,7 +35,6 @@ public class FugoCraft_Main {
 	
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
-		// TODO -> start plugin: load config, assign variables
 		
 		// Giving all the other classes a singleton of this class
 		commandRegister.set(this);
@@ -55,7 +54,6 @@ public class FugoCraft_Main {
 
 	@Subscribe
 	public void onStop(ServerStoppingEvent event) {
-		// TODO -> stop plugin: save config (if changed), clean up
 		logger.info("FugoCraft Sponge serverside plugin stopping...");
 
 		logger.info("FugoCraft Sponge serverside plugin now stopped!");
