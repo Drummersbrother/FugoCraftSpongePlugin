@@ -50,6 +50,6 @@ public class commandRegister {
 
 		get().game.getCommandDispatcher()
 				.register(
-						get().getPluginContainer().getInstance(), feedCommandSpec, "heal");
+						get().getPluginContainer().getInstance(), feedCommandSpec, "feed");
 	}
 }
