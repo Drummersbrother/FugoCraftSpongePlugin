@@ -16,7 +16,13 @@ public class commandRegister {
 	public static FugoCraft_Main get() {
 		return MClass;
 	}
-
+	
+	public static void registerCommands(){
+		// TODO when registering commands, put the method call here
+		commandHealReg();
+		commandFeedReg();
+	}
+	
 	public static void commandHealReg() {
 
 		CommandSpec healCommandSpec = CommandSpec

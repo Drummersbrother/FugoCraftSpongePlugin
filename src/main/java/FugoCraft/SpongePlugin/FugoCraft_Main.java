@@ -32,13 +32,18 @@ public class FugoCraft_Main {
 	public PluginContainer getPluginContainer() {
 		return pluginManager.getPlugin(PluginID).orNull();
 	}
+	
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
 		// TODO -> start plugin: load config, assign variables
+		
+		// Giving all the other classes a singleton of this class
 		commandRegister.set(this);
 		commandExeHeal.set(this);
 		commandExeFeed.set(this);
-		commandRegister.commandHealReg();
+		
+		// Telling the commandRegister class to register all the commands
+		commandRegister.registerCommands();
 	}
 
 	@Subscribe
