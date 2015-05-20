@@ -1,4 +1,4 @@
-package FugoCraft.SpongePlugin;
+package FugoCraft.SpongePlugin.commandExecutors;
 
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Texts;
@@ -9,6 +9,8 @@ import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.util.command.args.CommandContext;
 import org.spongepowered.api.util.command.source.ConsoleSource;
 import org.spongepowered.api.util.command.spec.CommandExecutor;
+
+import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeHeal implements CommandExecutor {
 

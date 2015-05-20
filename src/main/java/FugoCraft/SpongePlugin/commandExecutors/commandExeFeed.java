@@ -1,4 +1,4 @@
-package FugoCraft.SpongePlugin;
+package FugoCraft.SpongePlugin.commandExecutors;
 
 import org.spongepowered.api.data.manipulators.entities.FoodData;
 import org.spongepowered.api.entity.player.Player;
@@ -10,6 +10,8 @@ import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.util.command.args.CommandContext;
 import org.spongepowered.api.util.command.source.ConsoleSource;
 import org.spongepowered.api.util.command.spec.CommandExecutor;
+
+import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeFeed implements CommandExecutor {
 
@@ -31,7 +33,7 @@ public class commandExeFeed implements CommandExecutor {
 		Player target = args.<Player> getOne("target").get();
 		
 		// Creating and initializing a FoodData object TODO figure out how to do this without getting a NPE
-	    FoodData foodData =  null;
+	    FoodData foodData = null;
 	    
 		foodData.setExhaustion(0);
 		foodData.setFoodLevel(10);
