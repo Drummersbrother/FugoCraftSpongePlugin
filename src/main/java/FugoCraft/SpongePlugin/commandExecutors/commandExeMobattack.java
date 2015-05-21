@@ -1,5 +1,6 @@
 package FugoCraft.SpongePlugin.commandExecutors;
 
+import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
@@ -22,8 +23,13 @@ public class commandExeMobattack implements CommandExecutor {
 
 	public CommandResult execute(CommandSource src, CommandContext args)
 			throws CommandException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// Store the command target
+		Player target = args.<Player> getOne("target").get();
+		
+		
+		
+		return CommandResult.success();
 	}
 	
 }
