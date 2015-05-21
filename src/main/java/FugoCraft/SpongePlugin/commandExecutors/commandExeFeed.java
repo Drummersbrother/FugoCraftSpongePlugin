@@ -30,13 +30,13 @@ public class commandExeFeed implements CommandExecutor {
 
 		// Store the command target
 		Player target = args.<Player> getOne("target").get();
-		
+
 		// Creating and initializing a FoodData object
-	    FoodData foodData;
-	    
+		FoodData foodData;
+
 		try {
 			foodData = FoodData.class.newInstance();
-		    
+
 			foodData.setExhaustion(0);
 			foodData.setFoodLevel(10);
 			foodData.setSaturation(5);
@@ -48,18 +48,22 @@ public class commandExeFeed implements CommandExecutor {
 				}
 			}
 
-			// Stores the target's food and saturation levels before they are fed
+			// Stores the target's food and saturation levels before they are
+			// fed
 			double HungerBefore = foodData.getFoodLevel();
 			double SaturationBefore = foodData.getSaturation();
 
 			// Heal the target
-			// This is done by getting the FoodData object (done ^), modifying it
-			// and then using the offer(FoodData) method to insert it back into the
+			// This is done by getting the FoodData object (done ^), modifying
+			// it
+			// and then using the offer(FoodData) method to insert it back into
+			// the
 			// player object. this will be mostly error-safe
 			foodData.setFoodLevel(20).setSaturation(20).setExhaustion(0);
 			target.offer(foodData);
 
-			// Store the target's food and saturation levels after they have been
+			// Store the target's food and saturation levels after they have
+			// been
 			// fed
 			double HungerAfter = foodData.getFoodLevel();
 			double SaturationAfter = foodData.getSaturation();
@@ -95,21 +99,23 @@ public class commandExeFeed implements CommandExecutor {
 			} else {
 				// Tells the target that they have been fed by
 				// "an unknown source of great power"
-				target.sendMessage(Texts.of(TextColors.GREEN,
-						"You have been fed by an unknown source of great power!"));
+				target.sendMessage(Texts
+						.of(TextColors.GREEN,
+								"You have been fed by an unknown source of great power!"));
 
 				src.sendMessage(Texts.of("You have fed "
-						+ target.getDisplayNameData().getDisplayName() + " from "
-						+ HungerBefore + "hunger and " + SaturationBefore
-						+ " saturation to " + HungerAfter + "hunger and "
-						+ SaturationAfter + " saturation."));
+						+ target.getDisplayNameData().getDisplayName()
+						+ " from " + HungerBefore + "hunger and "
+						+ SaturationBefore + " saturation to " + HungerAfter
+						+ "hunger and " + SaturationAfter + " saturation."));
 
 				if (!(src instanceof ConsoleSource)) {
-					get().getLogger().info("A non-player object has fed "
-							+ target.getName() + " from " + HungerBefore
-							+ "hunger and " + SaturationBefore + " saturation to "
-							+ HungerAfter + "hunger and " + SaturationAfter
-							+ " saturation.");
+					get().getLogger().info(
+							"A non-player object has fed " + target.getName()
+									+ " from " + HungerBefore + "hunger and "
+									+ SaturationBefore + " saturation to "
+									+ HungerAfter + "hunger and "
+									+ SaturationAfter + " saturation.");
 				}
 			}
 			return CommandResult.success();
