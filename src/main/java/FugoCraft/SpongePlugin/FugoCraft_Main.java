@@ -1,7 +1,6 @@
 package FugoCraft.SpongePlugin;
 
 import org.slf4j.Logger;
-import FugoCraft.SpongePlugin.commandExecutors.*;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.PreInitializationEvent;
@@ -17,13 +16,25 @@ import com.google.inject.Inject;
 public class FugoCraft_Main {
 	// Variable defining for class-scope variables (also used in other classes to interact with ANYTHINg)
 	@Inject
-	public Logger logger;
+	private Logger logger;
 	@Inject
-	public Game game;
+	private Game game;
 	@Inject
-	public PluginManager pluginManager;
+	private PluginManager pluginManager;
 	
 	public String PluginID = "fugocraftserver";
+	
+	public String getPluginID() {
+		return PluginID;
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	
+	public Logger getLogger() {
+		return logger;
+	}
 	
 	public PluginManager getPluginManager() {
 		return pluginManager;
@@ -36,10 +47,8 @@ public class FugoCraft_Main {
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
 		
-		// Giving all the other classes a singleton of this class
-		commandRegister.set(this);
-		commandExeHeal.set(this);
-		commandExeFeed.set(this);
+		// Giving the class instance setter a singleton of this class
+		pluginInstanceSetter.set(this);
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();

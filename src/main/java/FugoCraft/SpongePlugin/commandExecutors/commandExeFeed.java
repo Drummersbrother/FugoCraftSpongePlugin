@@ -103,7 +103,7 @@ public class commandExeFeed implements CommandExecutor {
 					+ SaturationAfter + " saturation."));
 
 			if (!(src instanceof ConsoleSource)) {
-				get().logger.info("A non-player object has fed "
+				get().getLogger().info("A non-player object has fed "
 						+ target.getName() + " from " + HungerBefore
 						+ "hunger and " + SaturationBefore + " saturation to "
 						+ HungerAfter + "hunger and " + SaturationAfter

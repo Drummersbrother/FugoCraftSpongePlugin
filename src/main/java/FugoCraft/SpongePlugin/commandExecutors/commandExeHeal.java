@@ -78,7 +78,7 @@ public class commandExeHeal implements CommandExecutor {
 					+ target.getDisplayNameData().getDisplayName() + " from "
 					+ HealthBefore + "hp to " + HealthAfter + "hp."));
 			if (!(src instanceof ConsoleSource)) {
-				get().logger.info(
+				get().getLogger().info(
 						"A non-player object has healed " + target.getName()
 								+ " from " + HealthBefore + "hp to "
 								+ HealthAfter + "hp.");

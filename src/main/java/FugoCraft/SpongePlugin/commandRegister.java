@@ -35,10 +35,10 @@ public class commandRegister {
 				.permission("fugocraft.command.heal")
 				.arguments(
 						GenericArguments.onlyOne(GenericArguments
-								.playerOrSource(Texts.of("target"), get().game)))
+								.playerOrSource(Texts.of("target"), get().getGame())))
 				.build();
 
-		get().game.getCommandDispatcher()
+		get().getGame().getCommandDispatcher()
 				.register(
 						get().getPluginContainer().getInstance(), healCommandSpec, "heal");
 	}
@@ -54,10 +54,10 @@ public class commandRegister {
 				.permission("fugocraft.command.feed")
 				.arguments(
 						GenericArguments.onlyOne(GenericArguments
-								.playerOrSource(Texts.of("target"), get().game)))
+								.playerOrSource(Texts.of("target"), get().getGame())))
 				.build();
 
-		get().game.getCommandDispatcher()
+		get().getGame().getCommandDispatcher()
 				.register(
 						get().getPluginContainer().getInstance(), feedCommandSpec, "feed");
 	}
