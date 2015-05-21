@@ -1,6 +1,9 @@
 package FugoCraft.SpongePlugin;
 
-import FugoCraft.SpongePlugin.commandExecutors.*;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+
 public class pluginInstanceSetter {
 	
 	private static FugoCraft_Main MSingleton;

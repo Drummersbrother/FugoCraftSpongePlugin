@@ -1,5 +1,6 @@
 package FugoCraft.SpongePlugin.commandExecutors;
 
+import org.spongepowered.api.data.manipulator.entity.FoodData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
@@ -9,7 +10,6 @@ import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.util.command.args.CommandContext;
 import org.spongepowered.api.util.command.source.ConsoleSource;
 import org.spongepowered.api.util.command.spec.CommandExecutor;
-import org.spongepowered.api.data.manipulator.entity.*;
 
 import FugoCraft.SpongePlugin.FugoCraft_Main;
 
