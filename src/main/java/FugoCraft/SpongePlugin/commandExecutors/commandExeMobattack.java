@@ -5,6 +5,7 @@ import com.google.common.base.Optional;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.manipulator.entity.SkeletonData;
 import org.spongepowered.api.data.type.SkeletonTypes;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.monster.Skeleton;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Texts;
@@ -142,6 +143,7 @@ public class commandExeMobattack implements CommandExecutor {
 				for (int i = 0; i < spawnAmount; i++) {
 					targetWorld.createEntity(entityContainer, checkLoc
 							.getSafeLocation(curLoc, 2, 2).get().getPosition());
+					targetWorld.spawnEntity((Entity) entityContainer);
 				}
 
 			}
@@ -158,6 +160,7 @@ public class commandExeMobattack implements CommandExecutor {
 				for (int i = 0; i < spawnAmount; i++) {
 					targetWorld.createEntity(entityContainer, checkLoc
 							.getSafeLocation(curLoc, 2, 2).get().getPosition());
+					targetWorld.spawnEntity((Entity) entityContainer);
 				}
 
 			}
@@ -174,6 +177,7 @@ public class commandExeMobattack implements CommandExecutor {
 				for (int i = 0; i < spawnAmount; i++) {
 					targetWorld.createEntity(entityContainer, checkLoc
 							.getSafeLocation(curLoc, 2, 2).get().getPosition());
+					targetWorld.spawnEntity((Entity) entityContainer);
 				}
 
 			}
@@ -190,6 +194,7 @@ public class commandExeMobattack implements CommandExecutor {
 				for (int i = 0; i < spawnAmount; i++) {
 					targetWorld.createEntity(entityContainer, checkLoc
 							.getSafeLocation(curLoc, 2, 2).get().getPosition());
+					targetWorld.spawnEntity((Entity) entityContainer);
 				}
 
 			}
