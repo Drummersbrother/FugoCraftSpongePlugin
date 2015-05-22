@@ -18,15 +18,15 @@ public class commandRegister {
 	public static FugoCraft_Main get() {
 		return MClass;
 	}
-	
-	public static void registerCommands(){
+
+	public static void registerCommands() {
 		// TODO when registering commands, put the method call here
 		commandHealReg();
 		commandFeedReg();
 		commandMobattackReg();
-		
+
 	}
-	
+
 	public static void commandHealReg() {
 
 		CommandSpec healCommandSpec = CommandSpec
@@ -38,15 +38,16 @@ public class commandRegister {
 				.permission("fugocraft.command.heal")
 				.arguments(
 						GenericArguments.onlyOne(GenericArguments
-								.playerOrSource(Texts.of("target"), get().getGame())))
-				.build();
+								.playerOrSource(Texts.of("target"), get()
+										.getGame()))).build();
 
-		get().getGame().getCommandDispatcher()
-				.register(
-						get().getPluginContainer().getInstance(), healCommandSpec, "heal");
-		
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						healCommandSpec, "heal");
+
 	}
-	
+
 	public static void commandFeedReg() {
 
 		CommandSpec feedCommandSpec = CommandSpec
@@ -58,32 +59,37 @@ public class commandRegister {
 				.permission("fugocraft.command.feed")
 				.arguments(
 						GenericArguments.onlyOne(GenericArguments
-								.playerOrSource(Texts.of("target"), get().getGame())))
-				.build();
+								.playerOrSource(Texts.of("target"), get()
+										.getGame()))).build();
 
-		get().getGame().getCommandDispatcher()
-				.register(
-						get().getPluginContainer().getInstance(), feedCommandSpec, "feed");
-		
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						feedCommandSpec, "feed");
+
 	}
-	
+
 	public static void commandMobattackReg() {
-		
+
 		CommandSpec mobattackCommandSpec = CommandSpec
 				.builder()
-				.description(Texts.of("Spooks a target player with scary skeletmans."))
+				.description(
+						Texts.of("Spooks a target player with scary skeletmans."))
 				.extendedDescription(
 						Texts.of(" If no target player is specified it will not spook anyone."))
 				.executor(new commandExeMobattack())
 				.permission("fugocraft.command.mobattack")
 				.arguments(
 						GenericArguments.onlyOne(GenericArguments
-								.playerOrSource(Texts.of("target"), get().getGame())))
+								.playerOrSource(Texts.of("target"), get()
+										.getGame())),
+						GenericArguments.integer(Texts.of("spawnAmount")))
 				.build();
 
-		get().getGame().getCommandDispatcher()
-				.register(
-						get().getPluginContainer().getInstance(), mobattackCommandSpec, "mobattack", "moba");
-		
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						mobattackCommandSpec, "mobattack", "moba");
+
 	}
 }
