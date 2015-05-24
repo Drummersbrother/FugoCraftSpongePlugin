@@ -1,9 +1,11 @@
 package FugoCraft.SpongePlugin;
 
-import org.spongepowered.api.text.Texts;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
 import org.spongepowered.api.util.command.spec.CommandSpec;
 
@@ -24,6 +26,47 @@ public class commandRegister {
 		commandHealReg();
 		commandFeedReg();
 		commandMobattackReg();
+		commandInvEditReg();
+		commandInvSubmitReg();
+
+	}
+
+	public static void commandInvSubmitReg() {
+
+		CommandSpec invSubmitCommandSpec = CommandSpec
+				.builder()
+				.description(
+						Texts.of("Gives the target from /invedit the inventory you have, also gives back the inventory you had before using /invedit to you"))
+				.extendedDescription(Texts.of(" If you don't have another player's inventory it will not do anything."))
+				.executor(new commandExeInvSubmit())
+				.permission("fugocraft.command.invedit.submit").build();
+
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						invSubmitCommandSpec, "invsubmit", "inventorysubmit");
+
+	}
+
+	public static void commandInvEditReg() {
+
+		CommandSpec invSubmitCommandSpec = CommandSpec
+				.builder()
+				.description(
+						Texts.of("Gives you a copy of a target player's inventory, when you have changed it as desired use /invsubmit to give the target that inventory and getting back your own inventory."))
+				.extendedDescription(
+						Texts.of(" If no target player is specified it will not do anything."))
+				.executor(new commandExeInvEdit())
+				.permission("fugocraft.command.invedit.edit")
+				.arguments(
+						GenericArguments.onlyOne(GenericArguments
+								.player(Texts.of("target"), get()
+										.getGame()))).build();
+
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						invSubmitCommandSpec, "invedit", "inventoryedit");
 
 	}
 

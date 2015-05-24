@@ -77,7 +77,7 @@ public class commandExeFeed implements CommandExecutor {
 						.of(TextColors.GREEN, "You have been fed by ")
 						.builder()
 						.append(Texts.of(TextColors.GOLD, source
-								.getDisplayNameData().getDisplayName()))
+								.getName()))
 						.append(Texts.of(TextColors.GREEN, " from "))
 						.append(Texts.of(TextColors.RED, HungerBefore))
 						.append(Texts.of(TextColors.GREEN, "hunger to "))
@@ -89,7 +89,7 @@ public class commandExeFeed implements CommandExecutor {
 						.of(TextColors.GREEN, "You have fed ")
 						.builder()
 						.append(Texts.of(TextColors.GOLD, target
-								.getDisplayNameData().getDisplayName()))
+								.getName()))
 						.append(Texts.of(TextColors.GREEN, " from "))
 						.append(Texts.of(TextColors.RED, HungerBefore))
 						.append(Texts.of(TextColors.GREEN, "hunger to "))

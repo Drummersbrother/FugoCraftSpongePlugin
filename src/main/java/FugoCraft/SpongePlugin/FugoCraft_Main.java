@@ -10,6 +10,12 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.plugin.PluginManager;
 
+import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+
 import com.google.inject.Inject;
 
 @Plugin(id = "fugocraftserver", name = "FugoCraft Serverside Plugin", version = "1.0")
@@ -22,7 +28,7 @@ public class FugoCraft_Main {
 	@Inject
 	private PluginManager pluginManager;
 	
-	public String PluginID = "fugocraftserver";
+	private String PluginID = "fugocraftserver";
 	
 	public String getPluginID() {
 		return PluginID;
@@ -47,8 +53,13 @@ public class FugoCraft_Main {
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
 		
-		// Giving the class instance setter a singleton of this class
-		pluginInstanceSetter.set(this);
+		// Giving the classes a singleton of this class
+		commandRegister.set(this);
+		commandExeFeed.set(this);
+		commandExeHeal.set(this);
+		commandExeMobattack.set(this);
+		commandExeInvSubmit.set(this);
+		commandExeInvEdit.set(this);
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();

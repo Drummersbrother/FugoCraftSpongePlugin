@@ -34,7 +34,8 @@ public class commandExeHeal implements CommandExecutor {
 		double HealthBefore = target.getHealthData().getHealth();
 
 		// Heal the target
-		target.getHealthData().setHealth(target.getHealthData().getMaxHealth());
+		target.offer(target.getHealthData().setHealth(
+				target.getHealthData().getMaxHealth()));
 
 		// Store the target's hp after they are healed
 		double HealthAfter = target.getHealthData().getHealth();
@@ -45,10 +46,8 @@ public class commandExeHeal implements CommandExecutor {
 
 			// Tells the target that they have been healed
 			target.sendMessage(Texts
-					.of(TextColors.GREEN, "You have been healed by ")
-					.builder()
-					.append(Texts.of(TextColors.GOLD, source
-							.getDisplayNameData().getDisplayName()))
+					.of(TextColors.GREEN, "You have been healed by ").builder()
+					.append(Texts.of(TextColors.GOLD, source.getName()))
 					.append(Texts.of(TextColors.GREEN, " from "))
 					.append(Texts.of(TextColors.RED, HealthBefore))
 					.append(Texts.of(TextColors.GREEN, "hp to "))
@@ -56,16 +55,20 @@ public class commandExeHeal implements CommandExecutor {
 					.append(Texts.of(TextColors.GREEN, "hp!")).build());
 
 			// Tells the player that they have healed the target
-			source.sendMessage(Texts
-					.of(TextColors.GREEN, "You have healed ")
+			source.sendMessage(Texts.of(TextColors.GREEN, "You have healed ")
 					.builder()
-					.append(Texts.of(TextColors.GOLD, target
-							.getDisplayNameData().getDisplayName()))
+					.append(Texts.of(TextColors.GOLD, target.getName()))
 					.append(Texts.of(TextColors.GREEN, " from "))
 					.append(Texts.of(TextColors.RED, HealthBefore))
 					.append(Texts.of(TextColors.GREEN, "hp to "))
 					.append(Texts.of(TextColors.RED, HealthAfter))
 					.append(Texts.of(TextColors.GREEN, "hp!")).build());
+
+			// Tells the console that the target has been healed by the source
+			get().getLogger().info(
+					source.getName() + " has healed " + target.getName()
+							+ " from " + HealthBefore + "hp to " + HealthAfter
+							+ "hp.");
 
 		} else {
 			// Tells the target that they have been healed by
@@ -74,9 +77,8 @@ public class commandExeHeal implements CommandExecutor {
 					.of(TextColors.GREEN,
 							"You have been healed by an unknown source of great power!"));
 
-			src.sendMessage(Texts.of("You have healed "
-					+ target.getDisplayNameData().getDisplayName() + " from "
-					+ HealthBefore + "hp to " + HealthAfter + "hp."));
+			src.sendMessage(Texts.of("You have healed " + target.getName()
+					+ " from " + HealthBefore + "hp to " + HealthAfter + "hp."));
 			if (!(src instanceof ConsoleSource)) {
 				get().getLogger().info(
 						"A non-player object has healed " + target.getName()

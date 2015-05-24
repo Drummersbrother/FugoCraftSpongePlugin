@@ -123,7 +123,7 @@ public class commandExeMobattack implements CommandExecutor {
 
 		// Creating a TeleportHelper object so we can check to see if the
 		// location is safe to spawn an entity in
-		TeleportHelper checkLoc;
+		TeleportHelper checkLoc = get().getGame().getTeleportHelper();
 
 		try {
 			checkLoc = TeleportHelper.class.newInstance();
