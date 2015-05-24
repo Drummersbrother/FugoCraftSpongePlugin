@@ -11,15 +11,17 @@ public class InvEditData {
 	private  HashMap<UUID, Inventory> prevInventory = new HashMap<UUID, Inventory>();
 
 	public  boolean haveUUIDCalled(UUID uuid) {
-		if (hasCalled.get(uuid) == true) {
-			return true;
-		} else {
+		if (hasCalled.get(uuid) == null) {
 			return false;
+		} else {
+			return true;
 		}
 	}
 
 	public void UUIDCalled(UUID uuid) {
+		if (hasCalled.get(uuid) == null) {
 		hasCalled.put(uuid, true);
+		}
 	}
 
 	/**

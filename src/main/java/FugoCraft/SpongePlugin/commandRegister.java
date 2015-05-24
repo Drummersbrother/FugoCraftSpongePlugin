@@ -2,9 +2,11 @@ package FugoCraft.SpongePlugin;
 
 import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
+
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
 import org.spongepowered.api.util.command.spec.CommandSpec;
@@ -28,7 +30,25 @@ public class commandRegister {
 		commandMobattackReg();
 		commandInvEditReg();
 		commandInvSubmitReg();
+		commandInvSee();
 
+	}
+
+	private static void commandInvSee() {
+		
+		CommandSpec invSeeCommandSpec = CommandSpec
+				.builder()
+				.description(
+						Texts.of("Opens the target's inventory for you to edit."))
+				.extendedDescription(Texts.of(""))
+				.executor(new commandExeInvSee())
+				.permission("fugocraft.command.invsee").build();
+
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						invSeeCommandSpec, "invsee", "inventorysee");
+		
 	}
 
 	public static void commandInvSubmitReg() {

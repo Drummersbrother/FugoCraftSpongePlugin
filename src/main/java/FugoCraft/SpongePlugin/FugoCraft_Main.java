@@ -1,5 +1,12 @@
 package FugoCraft.SpongePlugin;
 
+import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
@@ -9,12 +16,6 @@ import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.plugin.PluginManager;
-
-import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
 
 import com.google.inject.Inject;
 
@@ -60,6 +61,7 @@ public class FugoCraft_Main {
 		commandExeMobattack.set(this);
 		commandExeInvSubmit.set(this);
 		commandExeInvEdit.set(this);
+		commandExeInvSee.set(this);
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();
