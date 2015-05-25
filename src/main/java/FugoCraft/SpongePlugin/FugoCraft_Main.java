@@ -53,6 +53,8 @@ public class FugoCraft_Main {
 	
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
+		// Logging that we have started loading
+		logger.info("FugoCraft Sponge serverside plugin loading...");
 		
 		// Giving the classes a singleton of this class
 		commandRegister.set(this);
@@ -65,13 +67,13 @@ public class FugoCraft_Main {
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();
+		
+		// Logging that we have finished loading
+		logger.info("FugoCraft Sponge serverside plugin done loading!");
 	}
 
 	@Subscribe
 	public void OnStart(ServerStartedEvent event) {
-		logger.info("FugoCraft Sponge serverside plugin loading...");
-
-		logger.info("FugoCraft Sponge serverside plugin done loading!");
 	}
 
 	@Subscribe

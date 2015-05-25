@@ -50,7 +50,7 @@ public class commandExeInvSee implements CommandExecutor {
 			}
 		} else {
 			
-			get().getLogger().info("A non-player object has tried to use /invsee.");
+			get().getLogger().info("A non-player object has tried to use /invsee on " + target.getName() + ".");
 			return CommandResult.empty();
 		}
 	}

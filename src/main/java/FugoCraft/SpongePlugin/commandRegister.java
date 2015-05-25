@@ -34,7 +34,7 @@ public class commandRegister {
 
 	}
 
-	private static void commandInvSee() {
+	public static void commandInvSee() {
 		
 		CommandSpec invSeeCommandSpec = CommandSpec
 				.builder()
