@@ -35,12 +35,15 @@ public class commandRegister {
 	}
 
 	public static void commandInvSee() {
-		
+
 		CommandSpec invSeeCommandSpec = CommandSpec
 				.builder()
 				.description(
 						Texts.of("Opens the target's inventory for you to edit."))
 				.extendedDescription(Texts.of(""))
+				.arguments(
+						GenericArguments.onlyOne(GenericArguments.player(
+								Texts.of("target"), get().getGame())))
 				.executor(new commandExeInvSee())
 				.permission("fugocraft.command.invsee").build();
 
@@ -48,7 +51,7 @@ public class commandRegister {
 				.getCommandDispatcher()
 				.register(get().getPluginContainer().getInstance(),
 						invSeeCommandSpec, "invsee", "inventorysee");
-		
+
 	}
 
 	public static void commandInvSubmitReg() {
@@ -57,7 +60,8 @@ public class commandRegister {
 				.builder()
 				.description(
 						Texts.of("Gives the target from /invedit the inventory you have, also gives back the inventory you had before using /invedit to you"))
-				.extendedDescription(Texts.of(" If you don't have another player's inventory it will not do anything."))
+				.extendedDescription(
+						Texts.of(" If you don't have another player's inventory it will not do anything."))
 				.executor(new commandExeInvSubmit())
 				.permission("fugocraft.command.invedit.submit").build();
 
@@ -79,9 +83,8 @@ public class commandRegister {
 				.executor(new commandExeInvEdit())
 				.permission("fugocraft.command.invedit.edit")
 				.arguments(
-						GenericArguments.onlyOne(GenericArguments
-								.player(Texts.of("target"), get()
-										.getGame()))).build();
+						GenericArguments.onlyOne(GenericArguments.player(
+								Texts.of("target"), get().getGame()))).build();
 
 		get().getGame()
 				.getCommandDispatcher()

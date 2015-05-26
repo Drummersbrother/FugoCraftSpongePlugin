@@ -1,15 +1,13 @@
 package FugoCraft.SpongePlugin;
 
-import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+import java.util.HashMap;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
+import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
+import org.spongepowered.api.event.entity.player.PlayerQuitEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
@@ -17,11 +15,18 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.plugin.PluginManager;
 
+import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+
 import com.google.inject.Inject;
 
 @Plugin(id = "fugocraftserver", name = "FugoCraft Serverside Plugin", version = "1.0")
 public class FugoCraft_Main {
-	// Variable defining for class-scope variables (also used in other classes to interact with ANYTHINg)
+	
 	@Inject
 	private Logger logger;
 	@Inject
@@ -30,6 +35,8 @@ public class FugoCraft_Main {
 	private PluginManager pluginManager;
 	
 	private String PluginID = "fugocraftserver";
+	
+	private HashMap<UUID, Long> LogoutTime= new HashMap<UUID, Long>();
 	
 	public String getPluginID() {
 		return PluginID;
@@ -51,6 +58,10 @@ public class FugoCraft_Main {
 		return pluginManager.getPlugin(PluginID).orNull();
 	}
 	
+	public HashMap<UUID, Long> getLogoutTimes() {
+		return LogoutTime;
+	}
+	
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
 		// Logging that we have started loading
@@ -64,6 +75,8 @@ public class FugoCraft_Main {
 		commandExeInvSubmit.set(this);
 		commandExeInvEdit.set(this);
 		commandExeInvSee.set(this);
+		playerJoinEvent.set(this);
+		playerLogoutEvent.set(this);
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();
@@ -81,5 +94,15 @@ public class FugoCraft_Main {
 		logger.info("FugoCraft Sponge serverside plugin stopping...");
 
 		logger.info("FugoCraft Sponge serverside plugin now stopped!");
+	}
+	
+	@Subscribe
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		playerJoinEvent.eventCalled(event);
+	}
+	
+	@Subscribe
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		playerLogoutEvent.eventCalled(event);
 	}
 }
