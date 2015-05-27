@@ -31,6 +31,7 @@ public class playerJoinEvent {
 			event.getEntity()
 					.kick(Texts
 							.of("You can not log back into the server that quickly! (must at least be 5 seconds between log off and log in)"));
+			get().getLogger().info("A player has tried to join the server too soon after logging out!");
 		}
 
 	}
