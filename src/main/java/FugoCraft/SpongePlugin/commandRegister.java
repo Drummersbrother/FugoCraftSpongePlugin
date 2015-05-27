@@ -30,11 +30,11 @@ public class commandRegister {
 		commandMobattackReg();
 		commandInvEditReg();
 		commandInvSubmitReg();
-		commandInvSee();
+		commandInvSeeReg();
 
 	}
 
-	public static void commandInvSee() {
+	public static void commandInvSeeReg() {
 
 		CommandSpec invSeeCommandSpec = CommandSpec
 				.builder()
