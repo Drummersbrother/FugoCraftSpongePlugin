@@ -15,7 +15,7 @@ Doing:
 	
 Known bugs:
 
-	{/Heal, /Feed} gives a AbstractMethodError (that method doesnt exist)	basically that they havent implemented the method for utilising healthdata
+	{/Feed} gives a AbstractMethodError (that method doesnt exist)	basically that they havent implemented the method for utilising fooddata
 			
 License:
 

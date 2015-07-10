@@ -1,7 +1,13 @@
 package FugoCraft.SpongePlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
+
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -14,6 +20,7 @@ import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.plugin.PluginManager;
+import org.spongepowered.api.service.config.DefaultConfig;
 
 import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
@@ -21,6 +28,7 @@ import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
+import FugoCraft.SpongePlugin.commandExecutors.commandExePing;
 
 import com.google.inject.Inject;
 
@@ -33,6 +41,14 @@ public class FugoCraft_Main {
 	private Game game;
 	@Inject
 	private PluginManager pluginManager;
+	@Inject
+	@DefaultConfig(sharedRoot = true)
+	private File defaultConfig;
+	@Inject
+	@DefaultConfig(sharedRoot = true)
+	private ConfigurationLoader<CommentedConfigurationNode> configManager;
+	
+	private ConfigurationNode config;
 	
 	private String PluginID = "fugocraftserver";
 	
@@ -67,6 +83,18 @@ public class FugoCraft_Main {
 		// Logging that we have started loading
 		logger.info("FugoCraft Sponge serverside plugin loading...");
 		
+		// Setting up the config file
+		try{
+			if (!defaultConfig.exists()) {
+			defaultConfig.createNewFile();
+			
+			config = configManager.load();
+			}
+		} catch (IOException e){
+			logger.error("CONFIG FILE CREATION FAILED! THIS MAY CAUSE INSTABILITY WITH SOME FEATURES AND COMMANDS");
+			e.printStackTrace();
+		}
+		
 		// Giving the classes a singleton of this class
 		commandRegister.set(this);
 		commandExeFeed.set(this);
@@ -77,6 +105,7 @@ public class FugoCraft_Main {
 		commandExeInvSee.set(this);
 		playerJoinEvent.set(this);
 		playerLogoutEvent.set(this);
+		commandExePing.set(this);
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();
@@ -104,5 +133,10 @@ public class FugoCraft_Main {
 	@Subscribe
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		playerLogoutEvent.eventCalled(event);
+	}
+	
+	public double getRelogTimeLimit() {
+		//TODO ADDA DET SOM BEHÖVS
+		return 1;
 	}
 }
