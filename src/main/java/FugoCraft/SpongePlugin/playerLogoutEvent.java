@@ -32,14 +32,16 @@ public class playerLogoutEvent implements Runnable {
 	// This is called when the corresponding event is called
 	public static void eventCalled(PlayerQuitEvent eventObject) {
 		event = eventObject;
-
+		
+		if (get().getConfig().getNode("Use relog cooldown?").getBoolean()) {
 		LogoutTimeHandler();
+		}
 	}
 
 	public static void LogoutTimeHandler() {
 		get().getLogoutTimes().put(event.getEntity().getUniqueId(), System.currentTimeMillis());
 		
-		// Schedules the removal of the player's logout time after 5 seconds (Asynchronously)
-		get().getGame().getScheduler().getTaskBuilder().async().delay(5000).execute(new playerLogoutEvent(event.getEntity().getUniqueId()));
+		// Schedules the removal of the player's logout time after X seconds (Time limit specified in the configuration file) (Asynchronously)
+		get().getGame().getScheduler().getTaskBuilder().async().delay((long) (get().getRelogTimeLimit() * 1000)).execute(new playerLogoutEvent(event.getEntity().getUniqueId()));
 	}
 }

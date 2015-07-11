@@ -34,7 +34,6 @@ public class playerJoinEvent {
 						.of("You can not log back into the server that quickly! (must at least be " + get().getRelogTimeLimit() + " seconds between log off and log in)"));
 				get().getLogger()
 						.info("A player has tried to join the server too soon after logging out!");
-				get().getLogger().info("DEBUG: " + (System.currentTimeMillis() - get().getLogoutTimes().get(event.getUser().getUniqueId())) + "!");
 			} else {
 				get().getLogoutTimes().remove(event.getUser().getUniqueId());
 			}

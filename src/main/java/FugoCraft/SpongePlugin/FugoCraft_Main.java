@@ -54,6 +54,12 @@ public class FugoCraft_Main {
 	
 	private HashMap<UUID, Long> LogoutTime= new HashMap<UUID, Long>();
 	
+	
+	// This part is for default config values
+	private double defRelogCooldown = 5;
+	private boolean defuseRelogCooldown = true;
+	
+	// Some getters and useful stuff like that
 	public String getPluginID() {
 		return PluginID;
 	}
@@ -78,6 +84,14 @@ public class FugoCraft_Main {
 		return LogoutTime;
 	}
 	
+	public ConfigurationNode getConfig() {
+		return config;
+	}
+	
+	public ConfigurationLoader<CommentedConfigurationNode> getConfManager() {
+		return configManager;
+	}
+	
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
 		// Logging that we have started loading
@@ -85,13 +99,29 @@ public class FugoCraft_Main {
 		
 		// Setting up the config file
 		try{
+			// Checking if the config exists
 			if (!defaultConfig.exists()) {
 			defaultConfig.createNewFile();
 			
 			config = configManager.load();
+			
+			// Setting up default values for the config
+			config.getNode("Use relog cooldown?").setValue(defuseRelogCooldown);
+			config.getNode("Relog cooldown").setValue(defRelogCooldown);
+			
+			// Saving the values
+			configManager.save(config);
+			
 			}
+			
+			// If the config exists then it just loads it
+			config = configManager.load();
+			
+			// Making sure that all values exist
+			fixConfig(config);
+			
 		} catch (IOException e){
-			logger.error("CONFIG FILE CREATION FAILED! THIS MAY CAUSE INSTABILITY WITH SOME FEATURES AND COMMANDS");
+			logger.error("CONFIG FILE CREATION FAILED! THIS MAY CAUSE INSTABILITY WITH SOME FEATURES AND COMMANDS!");
 			e.printStackTrace();
 		}
 		
@@ -136,7 +166,20 @@ public class FugoCraft_Main {
 	}
 	
 	public double getRelogTimeLimit() {
-		//TODO ADDA DET SOM BEHÖVS
-		return 1;
+		return config.getNode("Relog cooldown").getDouble();
+	}
+	
+	// This is used to check if all config values that should exist exists and if not then it sets them to default
+	private void fixConfig(ConfigurationNode fixConfig) {
+		
+		// Checking and fixing the "Use relog cooldown?" entry
+		if ((Object) config.getNode("Use relog cooldown?").getBoolean() == null || config.getNode("Use relog cooldown?").isVirtual()) {
+			config.getNode("Use relog cooldown?").setValue(defuseRelogCooldown);
+		}
+		
+		// Checking and fixing the "Relog cooldown" entry
+		if ((Object) config.getNode("Relog cooldown").getDouble() == null || config.getNode("Relog cooldown").isVirtual()) {
+			config.getNode("Relog cooldown").setValue(defRelogCooldown);
+		}
 	}
 }
