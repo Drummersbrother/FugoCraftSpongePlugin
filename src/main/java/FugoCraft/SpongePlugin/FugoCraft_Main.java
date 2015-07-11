@@ -14,6 +14,7 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
 import org.spongepowered.api.event.entity.player.PlayerQuitEvent;
+import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
@@ -21,15 +22,6 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.plugin.PluginManager;
 import org.spongepowered.api.service.config.DefaultConfig;
-
-import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
-import FugoCraft.SpongePlugin.commandExecutors.commandExePing;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeRelConf;
 
 import com.google.inject.Inject;
 
@@ -126,19 +118,6 @@ public class FugoCraft_Main {
 			e.printStackTrace();
 		}
 		
-		// Giving the classes a singleton of this class
-		commandRegister.set(this);
-		commandExeFeed.set(this);
-		commandExeHeal.set(this);
-		commandExeMobattack.set(this);
-		commandExeInvSubmit.set(this);
-		commandExeInvEdit.set(this);
-		commandExeInvSee.set(this);
-		commandExePing.set(this);
-		commandExeRelConf.set(this);
-		playerJoinEvent.set(this);
-		playerLogoutEvent.set(this);
-		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();
 		
@@ -155,6 +134,17 @@ public class FugoCraft_Main {
 		logger.info("FugoCraft Sponge serverside plugin stopping...");
 
 		logger.info("FugoCraft Sponge serverside plugin now stopped!");
+	}
+	
+	private static FugoCraft_Main instance;
+	
+	@Subscribe
+	public void onPluginInit(InitializationEvent evt) {
+	     instance = this;
+	}
+
+	public static FugoCraft_Main getInstance() {
+	    return instance;
 	}
 	
 	@Subscribe

@@ -6,8 +6,6 @@ import org.spongepowered.api.event.entity.player.PlayerQuitEvent;
 
 public class playerLogoutEvent implements Runnable {
 
-	private static FugoCraft_Main MClass;
-
 	private static PlayerQuitEvent event;
 	
 	private UUID taskUUID; 
@@ -16,12 +14,8 @@ public class playerLogoutEvent implements Runnable {
 		taskUUID = uniqueId;
 	}
 
-	public static void set(FugoCraft_Main singleton) {
-		MClass = singleton;
-	}
-
 	public static FugoCraft_Main get() {
-		return MClass;
+		return FugoCraft_Main.getInstance();
 	}
 	
 	// This is the method to use in the task builder

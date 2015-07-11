@@ -15,14 +15,8 @@ import org.spongepowered.api.util.command.spec.CommandSpec;
 
 public class commandRegister {
 
-	private static FugoCraft_Main MClass;
-
-	public static void set(FugoCraft_Main singleton) {
-		MClass = singleton;
-	}
-
 	public static FugoCraft_Main get() {
-		return MClass;
+		return FugoCraft_Main.getInstance();
 	}
 
 	public static void registerCommands() {

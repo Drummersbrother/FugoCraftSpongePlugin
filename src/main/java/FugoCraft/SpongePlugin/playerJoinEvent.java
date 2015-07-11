@@ -5,16 +5,10 @@ import org.spongepowered.api.text.Texts;
 
 public class playerJoinEvent {
 
-	private static FugoCraft_Main MClass;
-
 	private static PlayerJoinEvent event;
 
-	public static void set(FugoCraft_Main singleton) {
-		MClass = singleton;
-	}
-
 	public static FugoCraft_Main get() {
-		return MClass;
+		return FugoCraft_Main.getInstance();
 	}
 
 	// This method should be called from an event subscriber in the main class

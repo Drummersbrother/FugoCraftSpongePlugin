@@ -10,14 +10,8 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeRelConf implements CommandExecutor {
 
-	private static FugoCraft_Main MClass;
-
-	public static void set(FugoCraft_Main singleton) {
-		MClass = singleton;
-	}
-
 	public static FugoCraft_Main get() {
-		return MClass;
+		return FugoCraft_Main.getInstance();
 	}
 
 
