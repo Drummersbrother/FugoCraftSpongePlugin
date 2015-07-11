@@ -29,14 +29,14 @@ public class commandExePing implements CommandExecutor {
 
 		// Storing the target
 		Player target = args.<Player> getOne("target").get();
+		
+		// Storing the target's ping
+		int targetPing = target.getConnection().getPing();
 
 		if (src instanceof Player) {
 
 			// Storing the source
 			Player source = (Player) src;
-
-			// Storing the target's ping
-			int targetPing = target.getConnection().getPing();
 
 			// Telling the console about the command execution
 			get().getLogger().info(
@@ -51,11 +51,9 @@ public class commandExePing implements CommandExecutor {
 					.append(Texts.of(TextColors.GREEN, " ms.")).build());
 
 		} else {
-
-			// Tell the console that it obviously has 0 ping, because it is the server
-
-			get().getLogger()
-					.info("You, the console, obviously have 0 ping, because YOU ARE the server. SO why even use the /ping command?");
+			
+			// Logging the information to the console
+			get().getLogger().info(target.getName() + "'s ping is " + targetPing + ".");
 
 		}
 

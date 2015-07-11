@@ -29,6 +29,7 @@ import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
 import FugoCraft.SpongePlugin.commandExecutors.commandExePing;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeRelConf;
 
 import com.google.inject.Inject;
 
@@ -133,9 +134,10 @@ public class FugoCraft_Main {
 		commandExeInvSubmit.set(this);
 		commandExeInvEdit.set(this);
 		commandExeInvSee.set(this);
+		commandExePing.set(this);
+		commandExeRelConf.set(this);
 		playerJoinEvent.set(this);
 		playerLogoutEvent.set(this);
-		commandExePing.set(this);
 		
 		// Telling the commandRegister class to register all the commands
 		commandRegister.registerCommands();
@@ -180,6 +182,18 @@ public class FugoCraft_Main {
 		// Checking and fixing the "Relog cooldown" entry
 		if ((Object) config.getNode("Relog cooldown").getDouble() == null || config.getNode("Relog cooldown").isVirtual()) {
 			config.getNode("Relog cooldown").setValue(defRelogCooldown);
+		}
+	}
+	
+	public boolean relConf() {
+		try {
+			config = configManager.load();
+			
+			return true;
+		} catch (IOException e) {
+			logger.error("Failed to reload config, check stacktrace for more info!");
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

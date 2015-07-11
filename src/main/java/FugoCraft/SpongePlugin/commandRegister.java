@@ -7,6 +7,7 @@ import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExePing;
+import FugoCraft.SpongePlugin.commandExecutors.commandExeRelConf;
 
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
@@ -33,14 +34,16 @@ public class commandRegister {
 		commandInvSubmitReg();
 		commandInvSeeReg();
 		commandPingReg();
+		commandReloadConfReg();
 
 	}
 
 	public static void commandPingReg() {
-		
-		CommandSpec PingCommandSpec = CommandSpec
+
+		CommandSpec pingCommandSpec = CommandSpec
 				.builder()
-				.description(Texts.of("Tells you the target player's ping (in milliseconds)."))
+				.description(
+						Texts.of("Tells you the target player's ping (in milliseconds)."))
 				.extendedDescription(
 						Texts.of(" If no target player is specified it will tell you your ping."))
 				.executor(new commandExePing())
@@ -49,11 +52,25 @@ public class commandRegister {
 						GenericArguments.onlyOne(GenericArguments
 								.playerOrSource(Texts.of("target"), get()
 										.getGame()))).build();
-		
+
 		get().getGame()
-		.getCommandDispatcher()
-		.register(get().getPluginContainer().getInstance(),
-				PingCommandSpec, "pong", "ping");		
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						pingCommandSpec, "pong", "ping");
+	}
+
+	public static void commandReloadConfReg() {
+
+		CommandSpec reloadConfSpec = CommandSpec.builder()
+				.description(Texts.of("Reloads the configuration file"))
+				.executor(new commandExeRelConf())
+				.permission("fugocraft.command.admin.reloadconf")
+				.arguments(GenericArguments.none()).build();
+
+		get().getGame()
+				.getCommandDispatcher()
+				.register(get().getPluginContainer().getInstance(),
+						reloadConfSpec, "reloadconfig", "relconfig", "reloadconf", "relconf");
 	}
 
 	public static void commandInvSeeReg() {
