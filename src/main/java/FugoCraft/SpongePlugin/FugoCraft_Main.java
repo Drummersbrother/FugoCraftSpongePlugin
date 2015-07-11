@@ -85,6 +85,17 @@ public class FugoCraft_Main {
 		return configManager;
 	}
 	
+	private static FugoCraft_Main instance;
+	
+	@Subscribe
+	public void onPluginInit(InitializationEvent evt) {
+	     instance = this;
+	}
+
+	public static FugoCraft_Main getInstance() {
+	    return instance;
+	}
+	
 	@Subscribe
 	public void onInit(PreInitializationEvent event) {
 		// Logging that we have started loading
@@ -134,17 +145,6 @@ public class FugoCraft_Main {
 		logger.info("FugoCraft Sponge serverside plugin stopping...");
 
 		logger.info("FugoCraft Sponge serverside plugin now stopped!");
-	}
-	
-	private static FugoCraft_Main instance;
-	
-	@Subscribe
-	public void onPluginInit(InitializationEvent evt) {
-	     instance = this;
-	}
-
-	public static FugoCraft_Main getInstance() {
-	    return instance;
 	}
 	
 	@Subscribe
