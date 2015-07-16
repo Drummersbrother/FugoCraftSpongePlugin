@@ -1,0 +1,22 @@
+THIS IS A DOCUMENT FOR ME, THE DEV (Hugo Berg) hb11002@icloud.com
+
+Changelog:
+
+	V1.0:
+		
+To add:
+
+	All the commands from the canarymod plugin
+	IDK, ask arvid and felicia
+	
+Doing:
+
+	/Feed and generally learning about dataholders and datamanipulators
+	
+Known bugs:
+
+	{/Feed} gives a AbstractMethodError (that method doesnt exist)	basically that they havent implemented the method for utilising fooddata
+			
+License:
+
+	If you want to use this plugin or any part of it in cases except for a minecraft server, contact me at: hb11002@icloud.com			
