@@ -10,20 +10,19 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeRelConf implements CommandExecutor {
 
-	public static FugoCraft_Main get() {
-		return FugoCraft_Main.getInstance();
-	}
+    public static FugoCraft_Main get() {
+        return FugoCraft_Main.getInstance();
+    }
 
+    public CommandResult execute(CommandSource src, CommandContext args)
+            throws CommandException {
 
-	public CommandResult execute(CommandSource src, CommandContext args)
-			throws CommandException {
-		
-		if (get().relConf()) {
-			get().getLogger().info("Reloading of configuration was successful");
-			return CommandResult.success();
-		} else {
-			return CommandResult.empty();
-		}
-	}
-	
+        if (get().relConf()) {
+            get().getLogger().info("Reloading of configuration was successful");
+            return CommandResult.success();
+        } else {
+            return CommandResult.empty();
+        }
+    }
+
 }

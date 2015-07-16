@@ -13,39 +13,40 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeInvSee implements CommandExecutor {
 
-	public static FugoCraft_Main get() {
-		return FugoCraft_Main.getInstance();
-	}
-	public CommandResult execute(CommandSource src, CommandContext args)
-			throws CommandException {
+    public static FugoCraft_Main get() {
+        return FugoCraft_Main.getInstance();
+    }
 
-		Player target = args.<Player> getOne("target").get();
+    public CommandResult execute(CommandSource src, CommandContext args)
+            throws CommandException {
 
-		if (src instanceof Player) {
-			Player source = (Player) src;
-			
-			if (target != source) {
+        Player target = args.<Player>getOne("target").get();
 
-			source.openInventory(target.getInventory());
+        if (src instanceof Player) {
+            Player source = (Player) src;
 
-			source.sendMessage(Texts.of(TextColors.GREEN, "You have opened ")
-					.builder()
-					.append(Texts.of(TextColors.RED, target.getName()))
-					.append(Texts.of(TextColors.GREEN, "'s inventory."))
-					.build());
-			
-			get().getLogger().info(source.getName() + " has opened " + target.getName() + "'s inventory.");
-			
-			return CommandResult.success();
-			} else {
-				source.sendMessage(Texts.of(TextColors.RED, "You can't use /invsee on yourself"));
-				return CommandResult.empty();
-			}
-		} else {
-			
-			get().getLogger().info("A non-player object has tried to use /invsee on " + target.getName() + ".");
-			return CommandResult.empty();
-		}
-	}
+            if (target != source) {
+
+                source.openInventory(target.getInventory());
+
+                source.sendMessage(Texts.of(TextColors.GREEN, "You have opened ")
+                        .builder()
+                        .append(Texts.of(TextColors.RED, target.getName()))
+                        .append(Texts.of(TextColors.GREEN, "'s inventory."))
+                        .build());
+
+                get().getLogger().info(source.getName() + " has opened " + target.getName() + "'s inventory.");
+
+                return CommandResult.success();
+            } else {
+                source.sendMessage(Texts.of(TextColors.RED, "You can't use /invsee on yourself"));
+                return CommandResult.empty();
+            }
+        } else {
+
+            get().getLogger().info("A non-player object has tried to use /invsee on " + target.getName() + ".");
+            return CommandResult.empty();
+        }
+    }
 
 }

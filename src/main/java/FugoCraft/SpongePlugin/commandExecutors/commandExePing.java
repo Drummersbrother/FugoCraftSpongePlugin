@@ -13,45 +13,45 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExePing implements CommandExecutor {
 
-	public static FugoCraft_Main get() {
-		return FugoCraft_Main.getInstance();
-	}
+    public static FugoCraft_Main get() {
+        return FugoCraft_Main.getInstance();
+    }
 
-	// Gives the player information about another player's ping
-	public CommandResult execute(CommandSource src, CommandContext args)
-			throws CommandException {
+    // Gives the player information about another player's ping
+    public CommandResult execute(CommandSource src, CommandContext args)
+            throws CommandException {
 
-		// Storing the target
-		Player target = args.<Player> getOne("target").get();
-		
-		// Storing the target's ping
-		int targetPing = target.getConnection().getPing();
+        // Storing the target
+        Player target = args.<Player>getOne("target").get();
 
-		if (src instanceof Player) {
+        // Storing the target's ping
+        int targetPing = target.getConnection().getPing();
 
-			// Storing the source
-			Player source = (Player) src;
+        if (src instanceof Player) {
 
-			// Telling the console about the command execution
-			get().getLogger().info(
-					source.getName() + " has used /ping on " + target.getName()
-							+ ", the ping was " + targetPing);
+            // Storing the source
+            Player source = (Player) src;
 
-			// Giving the source the info
-			source.sendMessage(Texts.of(TextColors.GOLD, target.getName())
-					.builder()
-					.append(Texts.of(TextColors.GREEN, "'s ping is "))
-					.append(Texts.of(TextColors.RED, targetPing))
-					.append(Texts.of(TextColors.GREEN, " ms.")).build());
+            // Telling the console about the command execution
+            get().getLogger().info(
+                    source.getName() + " has used /ping on " + target.getName()
+                            + ", the ping was " + targetPing);
 
-		} else {
-			
-			// Logging the information to the console
-			get().getLogger().info(target.getName() + "'s ping is " + targetPing + ".");
+            // Giving the source the info
+            source.sendMessage(Texts.of(TextColors.GOLD, target.getName())
+                    .builder()
+                    .append(Texts.of(TextColors.GREEN, "'s ping is "))
+                    .append(Texts.of(TextColors.RED, targetPing))
+                    .append(Texts.of(TextColors.GREEN, " ms.")).build());
 
-		}
+        } else {
 
-		return CommandResult.success();
+            // Logging the information to the console
+            get().getLogger().info(target.getName() + "'s ping is " + targetPing + ".");
 
-	}
+        }
+
+        return CommandResult.success();
+
+    }
 }

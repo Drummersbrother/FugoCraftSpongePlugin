@@ -15,111 +15,111 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeFeed implements CommandExecutor {
 
-	public static FugoCraft_Main get() {
-		return FugoCraft_Main.getInstance();
-	}
+    public static FugoCraft_Main get() {
+        return FugoCraft_Main.getInstance();
+    }
 
-	public CommandResult execute(CommandSource src, CommandContext args)
-			throws CommandException {
+    public CommandResult execute(CommandSource src, CommandContext args)
+            throws CommandException {
 
-		// Store the command target
-		Player target = args.<Player> getOne("target").get();
+        // Store the command target
+        Player target = args.<Player>getOne("target").get();
 
-		// Creating and initializing a FoodData object
-		FoodData foodData;
+        // Creating and initializing a FoodData object
+        FoodData foodData;
 
-		try {
-			foodData = FoodData.class.newInstance();
+        try {
+            foodData = FoodData.class.newInstance();
 
-			foodData.setExhaustion(0);
-			foodData.setFoodLevel(10);
-			foodData.setSaturation(5);
+            foodData.setExhaustion(0);
+            foodData.setFoodLevel(10);
+            foodData.setSaturation(5);
 
-			// Looping through all of the player's available datamanipulators
-			for (int i = 0; i < target.getManipulators().size(); i++) {
-				if (target.getManipulators().toArray()[i] instanceof FoodData) {
-					foodData = (FoodData) target.getManipulators().toArray()[i];
-				}
-			}
+            // Looping through all of the player's available datamanipulators
+            for (int i = 0; i < target.getManipulators().size(); i++) {
+                if (target.getManipulators().toArray()[i] instanceof FoodData) {
+                    foodData = (FoodData) target.getManipulators().toArray()[i];
+                }
+            }
 
-			// Stores the target's food and saturation levels before they are
-			// fed
-			double HungerBefore = foodData.getFoodLevel();
-			double SaturationBefore = foodData.getSaturation();
+            // Stores the target's food and saturation levels before they are
+            // fed
+            double HungerBefore = foodData.getFoodLevel();
+            double SaturationBefore = foodData.getSaturation();
 
-			// Heal the target
-			// This is done by getting the FoodData object (done ^), modifying
-			// it
-			// and then using the offer(FoodData) method to insert it back into
-			// the
-			// player object. this will be mostly error-safe
-			foodData.setFoodLevel(20).setSaturation(20).setExhaustion(0);
-			target.offer(foodData);
+            // Heal the target
+            // This is done by getting the FoodData object (done ^), modifying
+            // it
+            // and then using the offer(FoodData) method to insert it back into
+            // the
+            // player object. this will be mostly error-safe
+            foodData.setFoodLevel(20).setSaturation(20).setExhaustion(0);
+            target.offer(foodData);
 
-			// Store the target's food and saturation levels after they have
-			// been
-			// fed
-			double HungerAfter = foodData.getFoodLevel();
-			double SaturationAfter = foodData.getSaturation();
+            // Store the target's food and saturation levels after they have
+            // been
+            // fed
+            double HungerAfter = foodData.getFoodLevel();
+            double SaturationAfter = foodData.getSaturation();
 
-			if (src instanceof Player) {
-				// Store the source as a player
-				Player source = (Player) src;
+            if (src instanceof Player) {
+                // Store the source as a player
+                Player source = (Player) src;
 
-				// Tells the target that they have been fed
-				target.sendMessage(Texts
-						.of(TextColors.GREEN, "You have been fed by ")
-						.builder()
-						.append(Texts.of(TextColors.GOLD, source
-								.getName()))
-						.append(Texts.of(TextColors.GREEN, " from "))
-						.append(Texts.of(TextColors.RED, HungerBefore))
-						.append(Texts.of(TextColors.GREEN, "hunger to "))
-						.append(Texts.of(TextColors.RED, HungerAfter))
-						.append(Texts.of(TextColors.GREEN, "hunger!")).build());
+                // Tells the target that they have been fed
+                target.sendMessage(Texts
+                        .of(TextColors.GREEN, "You have been fed by ")
+                        .builder()
+                        .append(Texts.of(TextColors.GOLD, source
+                                .getName()))
+                        .append(Texts.of(TextColors.GREEN, " from "))
+                        .append(Texts.of(TextColors.RED, HungerBefore))
+                        .append(Texts.of(TextColors.GREEN, "hunger to "))
+                        .append(Texts.of(TextColors.RED, HungerAfter))
+                        .append(Texts.of(TextColors.GREEN, "hunger!")).build());
 
-				// Tells the player that they have fed the target
-				source.sendMessage(Texts
-						.of(TextColors.GREEN, "You have fed ")
-						.builder()
-						.append(Texts.of(TextColors.GOLD, target
-								.getName()))
-						.append(Texts.of(TextColors.GREEN, " from "))
-						.append(Texts.of(TextColors.RED, HungerBefore))
-						.append(Texts.of(TextColors.GREEN, "hunger to "))
-						.append(Texts.of(TextColors.RED, HungerAfter))
-						.append(Texts.of(TextColors.GREEN, "hunger!")).build());
+                // Tells the player that they have fed the target
+                source.sendMessage(Texts
+                        .of(TextColors.GREEN, "You have fed ")
+                        .builder()
+                        .append(Texts.of(TextColors.GOLD, target
+                                .getName()))
+                        .append(Texts.of(TextColors.GREEN, " from "))
+                        .append(Texts.of(TextColors.RED, HungerBefore))
+                        .append(Texts.of(TextColors.GREEN, "hunger to "))
+                        .append(Texts.of(TextColors.RED, HungerAfter))
+                        .append(Texts.of(TextColors.GREEN, "hunger!")).build());
 
-			} else {
-				// Tells the target that they have been fed by
-				// "an unknown source of great power"
-				target.sendMessage(Texts
-						.of(TextColors.GREEN,
-								"You have been fed by an unknown source of great power!"));
+            } else {
+                // Tells the target that they have been fed by
+                // "an unknown source of great power"
+                target.sendMessage(Texts
+                        .of(TextColors.GREEN,
+                                "You have been fed by an unknown source of great power!"));
 
-				src.sendMessage(Texts.of("You have fed "
-						+ target.getDisplayNameData().getDisplayName()
-						+ " from " + HungerBefore + "hunger and "
-						+ SaturationBefore + " saturation to " + HungerAfter
-						+ "hunger and " + SaturationAfter + " saturation."));
+                src.sendMessage(Texts.of("You have fed "
+                        + target.getDisplayNameData().getDisplayName()
+                        + " from " + HungerBefore + "hunger and "
+                        + SaturationBefore + " saturation to " + HungerAfter
+                        + "hunger and " + SaturationAfter + " saturation."));
 
-				if (!(src instanceof ConsoleSource)) {
-					get().getLogger().info(
-							"A non-player object has fed " + target.getName()
-									+ " from " + HungerBefore + "hunger and "
-									+ SaturationBefore + " saturation to "
-									+ HungerAfter + "hunger and "
-									+ SaturationAfter + " saturation.");
-				}
-			}
-			return CommandResult.success();
+                if (!(src instanceof ConsoleSource)) {
+                    get().getLogger().info(
+                            "A non-player object has fed " + target.getName()
+                                    + " from " + HungerBefore + "hunger and "
+                                    + SaturationBefore + " saturation to "
+                                    + HungerAfter + "hunger and "
+                                    + SaturationAfter + " saturation.");
+                }
+            }
+            return CommandResult.success();
 
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-			return CommandResult.empty();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return CommandResult.empty();
-		}
-	}
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            return CommandResult.empty();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return CommandResult.empty();
+        }
+    }
 }

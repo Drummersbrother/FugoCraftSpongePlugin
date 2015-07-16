@@ -29,182 +29,179 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
  */
 public class commandExeMobattack implements CommandExecutor {
 
-	public static FugoCraft_Main get() {
-		return FugoCraft_Main.getInstance();
-	}
+    public static FugoCraft_Main get() {
+        return FugoCraft_Main.getInstance();
+    }
 
-	public CommandResult execute(CommandSource src, CommandContext args)
-			throws CommandException {
+    public CommandResult execute(CommandSource src, CommandContext args)
+            throws CommandException {
 
-		// Store the command target
-		Player target = args.<Player> getOne("target").get();
+        // Store the command target
+        Player target = args.<Player>getOne("target").get();
 
-		// Store how many skeletons to spawn at each location
-		int spawnAmount = (Integer) args.getOne("spawnAmount").get();
+        // Store how many skeletons to spawn at each location
+        int spawnAmount = (Integer) args.getOne("spawnAmount").get();
 
-		// Store the target's current world
-		World targetWorld = (World) get().getGame().getServer()
-				.loadWorld(target.getWorld().getProperties());
+        // Store the target's current world
+        World targetWorld = (World) get().getGame().getServer()
+                .loadWorld(target.getWorld().getProperties());
 
-		// Create a skeleton to spawn
-		Skeleton skeletonToSpawn;
-		try {
-			skeletonToSpawn = Skeleton.class.newInstance();
+        // Create a skeleton to spawn
+        Skeleton skeletonToSpawn;
+        try {
+            skeletonToSpawn = Skeleton.class.newInstance();
 
-			// Set the skeleton to have appropriate data
-			SkeletonData skeletonData = skeletonToSpawn.getSkeletonData();
+            // Set the skeleton to have appropriate data
+            SkeletonData skeletonData = skeletonToSpawn.getSkeletonData();
 
-			// Putting appropriate data in the SkeletonData object
-			skeletonData.setValue(SkeletonTypes.NORMAL);
+            // Putting appropriate data in the SkeletonData object
+            skeletonData.setValue(SkeletonTypes.NORMAL);
 
-			// Offering the SKeletonData object to the Skeleton entity
-			skeletonToSpawn.offer(skeletonData);
+            // Offering the SKeletonData object to the Skeleton entity
+            skeletonToSpawn.offer(skeletonData);
 
-			if (spawnEntitiesAroundPlayer(target, skeletonToSpawn.toContainer(), targetWorld, spawnAmount, 2, 2)) {
-				
-				target.sendMessage(Texts.of(TextStyles.NONE, TextColors.GREEN, "You have been attacked!"));
-				
-				return CommandResult.success();
-			} else {
-				return CommandResult.empty();
-			}
-		} catch (InstantiationException e) {
-			get().getLogger().warn("Could not instantiate a skeleton entity.");
-			e.printStackTrace();
-			return CommandResult.empty();
-		} catch (IllegalAccessException e) {
-			get().getLogger().warn("Could not access the skeleton entity.");
-			e.printStackTrace();
-			return CommandResult.empty();
-		}
+            if (spawnEntitiesAroundPlayer(target, skeletonToSpawn.toContainer(), targetWorld, spawnAmount, 2, 2)) {
 
-	}
+                target.sendMessage(Texts.of(TextStyles.NONE, TextColors.GREEN, "You have been attacked!"));
 
-	/**
-	 * Tries to spawn the provided entity around the provided player in the
-	 * provided world. Also messages the target "You have been attacked!"
-	 * 
-	 * @param target
-	 *            {@link org.spongepowered.api.entity.player#Player} to spawn
-	 *            entities around
-	 * @param entityContainer
-	 *            {@link org.spongepowered.api.entity#Entity} to be spawned
-	 * @param targetWorld
-	 *            Target {@link org.spongepowered.api.world#World} to spawn the
-	 *            entities in
-	 * @param spawnAmount
-	 *            How many of the entity to spawn at every location to spawn at
-	 *            around the target Player
-	 * @param SafeHeight
-	 *            How high above every location to spawn at around the player it
-	 *            will search for valid points to spawn the entity(-ies) at
-	 * @param SafeWidth
-	 *            How long from every location to spawn at around the player it
-	 *            will search for valid points to spawn the entity(-ies) at
-	 * @return Boolean - If it is equal to {@code true} the spawning has not
-	 *         thrown an error if it is equal to {@code false} then the spawning
-	 *         has thrown an error.
-	 */
-	private boolean spawnEntitiesAroundPlayer(Player target,
-			DataContainer entityContainer, World targetWorld, int spawnAmount,
-			int SafeHeight, int SafeWidth) {
+                return CommandResult.success();
+            } else {
+                return CommandResult.empty();
+            }
+        } catch (InstantiationException e) {
+            get().getLogger().warn("Could not instantiate a skeleton entity.");
+            e.printStackTrace();
+            return CommandResult.empty();
+        } catch (IllegalAccessException e) {
+            get().getLogger().warn("Could not access the skeleton entity.");
+            e.printStackTrace();
+            return CommandResult.empty();
+        }
 
-		// Storing the target's location
-		Location spawnLoc = target.getLocation();
+    }
 
-		// Creating a Location to store the current spawn location
-		Location curLoc = spawnLoc;
+    /**
+     * Tries to spawn the provided entity around the provided player in the
+     * provided world. Also messages the target "You have been attacked!"
+     * 
+     * @param target {@link org.spongepowered.api.entity.player#Player} to spawn
+     *        entities around
+     * @param entityContainer {@link org.spongepowered.api.entity#Entity} to be
+     *        spawned
+     * @param targetWorld Target {@link org.spongepowered.api.world#World} to
+     *        spawn the entities in
+     * @param spawnAmount How many of the entity to spawn at every location to
+     *        spawn at around the target Player
+     * @param SafeHeight How high above every location to spawn at around the
+     *        player it will search for valid points to spawn the entity(-ies)
+     *        at
+     * @param SafeWidth How long from every location to spawn at around the
+     *        player it will search for valid points to spawn the entity(-ies)
+     *        at
+     * @return Boolean - If it is equal to {@code true} the spawning has not
+     *         thrown an error if it is equal to {@code false} then the spawning
+     *         has thrown an error.
+     */
+    private boolean spawnEntitiesAroundPlayer(Player target,
+            DataContainer entityContainer, World targetWorld, int spawnAmount,
+            int SafeHeight, int SafeWidth) {
 
-		// Creating a TeleportHelper object so we can check to see if the
-		// location is safe to spawn an entity in
-		TeleportHelper checkLoc = get().getGame().getTeleportHelper();
+        // Storing the target's location
+        Location spawnLoc = target.getLocation();
 
-		try {
-			checkLoc = TeleportHelper.class.newInstance();
+        // Creating a Location to store the current spawn location
+        Location curLoc = spawnLoc;
 
-			// TODO add position change and checking if something is a safe
-			// position, if it is not, do not spawn entity
+        // Creating a TeleportHelper object so we can check to see if the
+        // location is safe to spawn an entity in
+        TeleportHelper checkLoc = get().getGame().getTeleportHelper();
 
-			curLoc = spawnLoc.add(2, 0, 2);
+        try {
+            checkLoc = TeleportHelper.class.newInstance();
 
-			if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
-					SafeWidth)).equals(Optional.absent())) {
-				// If this throws a NullPointerException it is not my fault, it
-				// is google's fault! (we have checked if there is a valid
-				// position,
-				// so if it throws a NPE)
+            // TODO add position change and checking if something is a safe
+            // position, if it is not, do not spawn entity
 
-				for (int i = 0; i < spawnAmount; i++) {
-					targetWorld.createEntity(entityContainer, checkLoc
-							.getSafeLocation(curLoc, 2, 2).get().getPosition());
-					targetWorld.spawnEntity((Entity) entityContainer);
-				}
+            curLoc = spawnLoc.add(2, 0, 2);
 
-			}
+            if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
+                    SafeWidth)).equals(Optional.absent())) {
+                // If this throws a NullPointerException it is not my fault, it
+                // is google's fault! (we have checked if there is a valid
+                // position,
+                // so if it throws a NPE)
 
-			curLoc = spawnLoc.add(2, 0, -2);
+                for (int i = 0; i < spawnAmount; i++) {
+                    targetWorld.createEntity(entityContainer, checkLoc
+                            .getSafeLocation(curLoc, 2, 2).get().getPosition());
+                    targetWorld.spawnEntity((Entity) entityContainer);
+                }
 
-			if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
-					SafeWidth)).equals(Optional.absent())) {
-				// If this throws a NullPointerException it is not my fault, it
-				// is google's fault! (we have checked if there is a valid
-				// position,
-				// so if it throws a NPE)
+            }
 
-				for (int i = 0; i < spawnAmount; i++) {
-					targetWorld.createEntity(entityContainer, checkLoc
-							.getSafeLocation(curLoc, 2, 2).get().getPosition());
-					targetWorld.spawnEntity((Entity) entityContainer);
-				}
+            curLoc = spawnLoc.add(2, 0, -2);
 
-			}
+            if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
+                    SafeWidth)).equals(Optional.absent())) {
+                // If this throws a NullPointerException it is not my fault, it
+                // is google's fault! (we have checked if there is a valid
+                // position,
+                // so if it throws a NPE)
 
-			curLoc = spawnLoc.add(-2, 0, 2);
+                for (int i = 0; i < spawnAmount; i++) {
+                    targetWorld.createEntity(entityContainer, checkLoc
+                            .getSafeLocation(curLoc, 2, 2).get().getPosition());
+                    targetWorld.spawnEntity((Entity) entityContainer);
+                }
 
-			if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
-					SafeWidth)).equals(Optional.absent())) {
-				// If this throws a NullPointerException it is not my fault, it
-				// is google's fault! (we have checked if there is a valid
-				// position,
-				// so if it throws a NPE)
+            }
 
-				for (int i = 0; i < spawnAmount; i++) {
-					targetWorld.createEntity(entityContainer, checkLoc
-							.getSafeLocation(curLoc, 2, 2).get().getPosition());
-					targetWorld.spawnEntity((Entity) entityContainer);
-				}
+            curLoc = spawnLoc.add(-2, 0, 2);
 
-			}
+            if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
+                    SafeWidth)).equals(Optional.absent())) {
+                // If this throws a NullPointerException it is not my fault, it
+                // is google's fault! (we have checked if there is a valid
+                // position,
+                // so if it throws a NPE)
 
-			curLoc = spawnLoc.add(-2, 0, -2);
+                for (int i = 0; i < spawnAmount; i++) {
+                    targetWorld.createEntity(entityContainer, checkLoc
+                            .getSafeLocation(curLoc, 2, 2).get().getPosition());
+                    targetWorld.spawnEntity((Entity) entityContainer);
+                }
 
-			if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
-					SafeWidth)).equals(Optional.absent())) {
-				// If this throws a NullPointerException it is not my fault, it
-				// is google's fault! (we have checked if there is a valid
-				// position,
-				// so if it throws a NPE)
+            }
 
-				for (int i = 0; i < spawnAmount; i++) {
-					targetWorld.createEntity(entityContainer, checkLoc
-							.getSafeLocation(curLoc, 2, 2).get().getPosition());
-					targetWorld.spawnEntity((Entity) entityContainer);
-				}
+            curLoc = spawnLoc.add(-2, 0, -2);
 
-			}
+            if (((Object) checkLoc.getSafeLocation(curLoc, SafeHeight,
+                    SafeWidth)).equals(Optional.absent())) {
+                // If this throws a NullPointerException it is not my fault, it
+                // is google's fault! (we have checked if there is a valid
+                // position,
+                // so if it throws a NPE)
 
-			// If everything went well it will send back true
-			return true;
+                for (int i = 0; i < spawnAmount; i++) {
+                    targetWorld.createEntity(entityContainer, checkLoc
+                            .getSafeLocation(curLoc, 2, 2).get().getPosition());
+                    targetWorld.spawnEntity((Entity) entityContainer);
+                }
 
-		} catch (InstantiationException e) {
-			get().getLogger().warn("Could not instantiate a TeleportHelper.");
-			e.printStackTrace();
-			return false;
-		} catch (IllegalAccessException e) {
-			get().getLogger().warn("Could not access the TeleportHelper.");
-			e.printStackTrace();
-			return false;
-		}
+            }
 
-	}
+            // If everything went well it will send back true
+            return true;
+
+        } catch (InstantiationException e) {
+            get().getLogger().warn("Could not instantiate a TeleportHelper.");
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            get().getLogger().warn("Could not access the TeleportHelper.");
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }

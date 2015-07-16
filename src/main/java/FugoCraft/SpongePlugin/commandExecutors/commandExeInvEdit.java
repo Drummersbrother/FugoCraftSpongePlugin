@@ -17,59 +17,59 @@ import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeInvEdit implements CommandExecutor {
 
-	private static InvEditData commandData = new InvEditData();
+    private static InvEditData commandData = new InvEditData();
 
-	public static FugoCraft_Main get() {
-		return FugoCraft_Main.getInstance();
-	}
+    public static FugoCraft_Main get() {
+        return FugoCraft_Main.getInstance();
+    }
 
-	public CommandResult execute(CommandSource src, CommandContext args)
-			throws CommandException {
-		// Checking if the source is a Player or not
-		// TODO Add check to see if src has already used this command
-		if (src instanceof Player) {
+    public CommandResult execute(CommandSource src, CommandContext args)
+            throws CommandException {
+        // Checking if the source is a Player or not
+        // TODO Add check to see if src has already used this command
+        if (src instanceof Player) {
 
-			// Storing the source as a Player
-			Player source = (Player) src;
-			// Storing the target as a Player
-			Player target = args.<Player> getOne("target").get();
+            // Storing the source as a Player
+            Player source = (Player) src;
+            // Storing the target as a Player
+            Player target = args.<Player>getOne("target").get();
 
-			// Checking if the player has already called this command and has
-			// submitted the inventory to the previous target
-			if (commandData.haveUUIDCalled(source.getUniqueId())) {
+            // Checking if the player has already called this command and has
+            // submitted the inventory to the previous target
+            if (commandData.haveUUIDCalled(source.getUniqueId())) {
 
-				source.sendMessage(Texts
-						.of(TextColors.RED,
-								"You already have another player's inventory! Use /invsubmit to be able to use /invedit again."));
-				return CommandResult.empty();
-			} else {
+                source.sendMessage(Texts
+                        .of(TextColors.RED,
+                                "You already have another player's inventory! Use /invsubmit to be able to use /invedit again."));
+                return CommandResult.empty();
+            } else {
 
-				// Storing all the data that needs to be stored
-				commandData.UUIDCalled(source.getUniqueId());
-				commandData.setPrevInventory(source.getUniqueId(),
-						(Inventory) source.getInventory());
-				commandData.setTargetUUID(source.getUniqueId(),
-						target.getUniqueId());
-				
-				// Giving the target's Inventory to the source
-				PlayerHelpers.setPlayerInventory(target.getInventory(), source);
-				
-				return CommandResult.success();
-			}
-		} else {
-			src.sendMessage(Texts
-					.of("A non-player object can not use this command"));
-			return CommandResult.empty();
-		}
+                // Storing all the data that needs to be stored
+                commandData.UUIDCalled(source.getUniqueId());
+                commandData.setPrevInventory(source.getUniqueId(),
+                        (Inventory) source.getInventory());
+                commandData.setTargetUUID(source.getUniqueId(),
+                        target.getUniqueId());
 
-	}
+                // Giving the target's Inventory to the source
+                PlayerHelpers.setPlayerInventory(target.getInventory(), source);
 
-	public static InvEditData getCommandData() {
-		return commandData;
-	}
+                return CommandResult.success();
+            }
+        } else {
+            src.sendMessage(Texts
+                    .of("A non-player object can not use this command"));
+            return CommandResult.empty();
+        }
 
-	public static void setCommandData(InvEditData newCommandData) {
-		commandData = newCommandData;
-	}
+    }
+
+    public static InvEditData getCommandData() {
+        return commandData;
+    }
+
+    public static void setCommandData(InvEditData newCommandData) {
+        commandData = newCommandData;
+    }
 
 }
