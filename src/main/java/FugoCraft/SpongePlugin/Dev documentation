@@ -6,8 +6,7 @@ Changelog:
 		
 To add:
 
-	All the commands from the canarymod plugin
-	IDK, ask arvid and felicia
+	/gm [0, 1, 2, 3] {requires OP}
 	
 Doing:
 
@@ -15,7 +14,7 @@ Doing:
 	
 Known bugs:
 
-	{/Feed} gives a AbstractMethodError (that method doesnt exist)	basically that they havent implemented the method for utilising fooddata
+	idk
 			
 License:
 
