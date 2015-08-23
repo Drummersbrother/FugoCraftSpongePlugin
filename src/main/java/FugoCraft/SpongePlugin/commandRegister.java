@@ -8,7 +8,8 @@ import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
 import FugoCraft.SpongePlugin.commandExecutors.commandExePing;
 import FugoCraft.SpongePlugin.commandExecutors.commandExeRelConf;
-
+import com.google.inject.Inject;
+import org.spongepowered.api.Game;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
 import org.spongepowered.api.util.command.spec.CommandSpec;

@@ -1,5 +1,8 @@
 package FugoCraft.SpongePlugin.commandExecutors;
 
+import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
@@ -18,9 +21,15 @@ public class commandExeRelConf implements CommandExecutor {
             throws CommandException {
 
         if (get().relConf()) {
-            get().getLogger().info("Reloading of configuration was successful");
+            get().getLogger().info("Reloading of configuration was successful!");
+            if (src instanceof Player) {
+            	src.getMessageSink().sendMessage(Texts.of(TextColors.GREEN, "Reloading the configuration was successful!"));
+            }
             return CommandResult.success();
         } else {
+            if (src instanceof Player) {
+            	src.getMessageSink().sendMessage(Texts.of(TextColors.GREEN, "Reloading the configuration failed!"));
+            }
             return CommandResult.empty();
         }
     }

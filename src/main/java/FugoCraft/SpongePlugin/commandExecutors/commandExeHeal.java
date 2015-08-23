@@ -1,5 +1,8 @@
 package FugoCraft.SpongePlugin.commandExecutors;
 
+import FugoCraft.SpongePlugin.FugoCraft_Main;
+import org.spongepowered.api.data.manipulator.mutable.entity.HealthData;
+import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
@@ -9,8 +12,6 @@ import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.util.command.args.CommandContext;
 import org.spongepowered.api.util.command.source.ConsoleSource;
 import org.spongepowered.api.util.command.spec.CommandExecutor;
-
-import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeHeal implements CommandExecutor {
 
@@ -24,15 +25,15 @@ public class commandExeHeal implements CommandExecutor {
         // Store the command target
         Player target = args.<Player>getOne("target").get();
 
-        // Store the target's hp before they are healed
-        double HealthBefore = target.getHealthData().getHealth();
+        // Store the target's hp before they are healed and then maximum health
+        double HealthBefore = target.getHealthData().health().get();
+        MutableBoundedValue<Double> maxHealth = target.getHealthData().maxHealth();
 
         // Heal the target
-        target.offer(target.getHealthData().setHealth(
-                target.getHealthData().getMaxHealth()));
+        target.offer(target.getOrCreate(HealthData.class).get().health().set(maxHealth.get()));
 
         // Store the target's hp after they are healed
-        double HealthAfter = target.getHealthData().getHealth();
+        double HealthAfter = target.getHealthData().health().get();
 
         if (src instanceof Player) {
             // Store the source as a player

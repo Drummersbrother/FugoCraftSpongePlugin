@@ -25,7 +25,7 @@ import org.spongepowered.api.service.config.DefaultConfig;
 
 import com.google.inject.Inject;
 
-@Plugin(id = "fugocraftserver", name = "FugoCraft Serverside Plugin", version = "1.0")
+//@Plugin(id = "fugocraftserver", name = "FugoCraft Serverside Plugin", version = "1.0")
 public class FugoCraft_Main {
 
     @Inject private Logger logger;
@@ -89,7 +89,7 @@ public class FugoCraft_Main {
     }
 
     @Subscribe
-    public void onInit(PreInitializationEvent event) {
+    public void onInit(InitializationEvent event) {
         // Logging that we have started loading
         logger.info("FugoCraft Sponge serverside plugin loading...");
 
@@ -152,25 +152,30 @@ public class FugoCraft_Main {
     public double getRelogTimeLimit() {
         return config.getNode("Relog cooldown").getDouble();
     }
+    
+    public boolean getUseDB() {
+    	return config.getNode("Database Options:", "Use Database?").getBoolean();
+    }
 
     // This is used to check if all config values that should exist exists and
     // if not then it sets them to default
-    private void fixConfig(ConfigurationNode fixConfig) {
+    public void fixConfig(ConfigurationNode Config) {
 
         // Checking and fixing the "Use relog cooldown?" entry
-        if ((Object) config.getNode("Use relog cooldown?").getBoolean() == null || config.getNode("Use relog cooldown?").isVirtual()) {
-            config.getNode("Use relog cooldown?").setValue(defuseRelogCooldown);
+        if ((Object) Config.getNode("Use relog cooldown?").getBoolean() == null || Config.getNode("Use relog cooldown?").isVirtual()) {
+            Config.getNode("Use relog cooldown?").setValue(defuseRelogCooldown);
         }
 
         // Checking and fixing the "Relog cooldown" entry
-        if ((Object) config.getNode("Relog cooldown").getDouble() == null || config.getNode("Relog cooldown").isVirtual()) {
-            config.getNode("Relog cooldown").setValue(defRelogCooldown);
+        if ((Object) Config.getNode("Relog cooldown").getDouble() == null || Config.getNode("Relog cooldown").isVirtual()) {
+            Config.getNode("Relog cooldown").setValue(defRelogCooldown);
         }
     }
 
     public boolean relConf() {
         try {
             config = configManager.load();
+            fixConfig(config);
 
             return true;
         } catch (IOException e) {

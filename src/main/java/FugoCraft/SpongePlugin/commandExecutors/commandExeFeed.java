@@ -1,6 +1,7 @@
 package FugoCraft.SpongePlugin.commandExecutors;
 
-import org.spongepowered.api.data.manipulator.entity.FoodData;
+import FugoCraft.SpongePlugin.FugoCraft_Main;
+import org.spongepowered.api.data.manipulator.mutable.entity.FoodData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
@@ -10,8 +11,6 @@ import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.util.command.args.CommandContext;
 import org.spongepowered.api.util.command.source.ConsoleSource;
 import org.spongepowered.api.util.command.spec.CommandExecutor;
-
-import FugoCraft.SpongePlugin.FugoCraft_Main;
 
 public class commandExeFeed implements CommandExecutor {
 
@@ -26,41 +25,24 @@ public class commandExeFeed implements CommandExecutor {
         Player target = args.<Player>getOne("target").get();
 
         // Creating and initializing a FoodData object
-        FoodData foodData;
+        FoodData foodData = target.getOrCreate(FoodData.class).get();
+        	
 
-        try {
-            foodData = FoodData.class.newInstance();
-
-            foodData.setExhaustion(0);
-            foodData.setFoodLevel(10);
-            foodData.setSaturation(5);
-
-            // Looping through all of the player's available datamanipulators
-            for (int i = 0; i < target.getManipulators().size(); i++) {
-                if (target.getManipulators().toArray()[i] instanceof FoodData) {
-                    foodData = (FoodData) target.getManipulators().toArray()[i];
-                }
-            }
-
-            // Stores the target's food and saturation levels before they are
-            // fed
-            double HungerBefore = foodData.getFoodLevel();
-            double SaturationBefore = foodData.getSaturation();
-
-            // Heal the target
-            // This is done by getting the FoodData object (done ^), modifying
-            // it
-            // and then using the offer(FoodData) method to insert it back into
-            // the
-            // player object. this will be mostly error-safe
-            foodData.setFoodLevel(20).setSaturation(20).setExhaustion(0);
+            // Stores the target's food and saturation levels before they are fed
+            int HungerBefore = foodData.foodLevel().get();
+            double SaturationBefore = foodData.saturation().get();
+            
+            // Modifying the foodData object so it's has full foodLevel and good saturation and exhaustion
+            foodData.foodLevel().set(20);
+            foodData.saturation().set(foodData.saturation().getMaxValue());
+            foodData.exhaustion().set(foodData.exhaustion().getMaxValue());
+            
+            // Giving the target a full FoodData DataContainer
             target.offer(foodData);
 
-            // Store the target's food and saturation levels after they have
-            // been
-            // fed
-            double HungerAfter = foodData.getFoodLevel();
-            double SaturationAfter = foodData.getSaturation();
+            // Store the target's food and saturation levels after they have been fed
+            int HungerAfter = foodData.foodLevel().get();
+            double SaturationAfter = foodData.saturation().get();
 
             if (src instanceof Player) {
                 // Store the source as a player
@@ -98,7 +80,7 @@ public class commandExeFeed implements CommandExecutor {
                                 "You have been fed by an unknown source of great power!"));
 
                 src.sendMessage(Texts.of("You have fed "
-                        + target.getDisplayNameData().getDisplayName()
+                        + target.getDisplayNameData().displayName()
                         + " from " + HungerBefore + "hunger and "
                         + SaturationBefore + " saturation to " + HungerAfter
                         + "hunger and " + SaturationAfter + " saturation."));
@@ -110,16 +92,8 @@ public class commandExeFeed implements CommandExecutor {
                                     + SaturationBefore + " saturation to "
                                     + HungerAfter + "hunger and "
                                     + SaturationAfter + " saturation.");
-                }
-            }
-            return CommandResult.success();
-
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            return CommandResult.empty();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return CommandResult.empty();
+               }
+           }
+           return CommandResult.success();
         }
     }
-}

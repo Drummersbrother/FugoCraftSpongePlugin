@@ -3,7 +3,7 @@ package FugoCraft.SpongePlugin.commandExecutors;
 import com.google.common.base.Optional;
 
 import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.manipulator.entity.SkeletonData;
+import org.spongepowered.api.data.manipulator.mutable.entity.SkeletonData;
 import org.spongepowered.api.data.type.SkeletonTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.monster.Skeleton;
@@ -52,10 +52,10 @@ public class commandExeMobattack implements CommandExecutor {
             skeletonToSpawn = Skeleton.class.newInstance();
 
             // Set the skeleton to have appropriate data
-            SkeletonData skeletonData = skeletonToSpawn.getSkeletonData();
+            SkeletonData skeletonData = skeletonToSpawn.getOrCreate(SkeletonData.class).get();
 
             // Putting appropriate data in the SkeletonData object
-            skeletonData.setValue(SkeletonTypes.NORMAL);
+            skeletonData.type().set(SkeletonTypes.NORMAL);
 
             // Offering the SKeletonData object to the Skeleton entity
             skeletonToSpawn.offer(skeletonData);
@@ -118,9 +118,6 @@ public class commandExeMobattack implements CommandExecutor {
 
         try {
             checkLoc = TeleportHelper.class.newInstance();
-
-            // TODO add position change and checking if something is a safe
-            // position, if it is not, do not spawn entity
 
             curLoc = spawnLoc.add(2, 0, 2);
 

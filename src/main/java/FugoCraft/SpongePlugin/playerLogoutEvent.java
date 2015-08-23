@@ -37,7 +37,7 @@ public class playerLogoutEvent implements Runnable {
 
         // Schedules the removal of the player's logout time after X seconds
         // (Time limit specified in the configuration file) (Asynchronously)
-        get().getGame().getScheduler().getTaskBuilder().async().delay((long) (get().getRelogTimeLimit() * 1000))
+        get().getGame().getScheduler().createTaskBuilder().async().delay((long) (get().getRelogTimeLimit() * 1000))
                 .execute(new playerLogoutEvent(event.getEntity().getUniqueId()));
     }
 }
