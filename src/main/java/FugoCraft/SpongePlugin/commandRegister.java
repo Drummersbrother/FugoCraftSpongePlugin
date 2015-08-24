@@ -1,15 +1,6 @@
 package FugoCraft.SpongePlugin;
 
-import FugoCraft.SpongePlugin.commandExecutors.commandExeFeed;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeHeal;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSee;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvSubmit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeMobattack;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeInvEdit;
-import FugoCraft.SpongePlugin.commandExecutors.commandExePing;
-import FugoCraft.SpongePlugin.commandExecutors.commandExeRelConf;
-import com.google.inject.Inject;
-import org.spongepowered.api.Game;
+import FugoCraft.SpongePlugin.commandExecutors.*;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.args.GenericArguments;
 import org.spongepowered.api.util.command.spec.CommandSpec;
@@ -20,8 +11,9 @@ public class commandRegister {
         return FugoCraft_Main.getInstance();
     }
 
-    public static void registerCommands() {
+    public static void registerCommands(boolean enableDB) {
         // TODO when registering commands, put the method call here
+    	// If a command interacts with a database, please don't register it if enableDB = false
         commandHealReg();
         commandFeedReg();
         commandMobattackReg();
@@ -30,6 +22,11 @@ public class commandRegister {
         commandInvSeeReg();
         commandPingReg();
         commandReloadConfReg();
+        
+        if (enableDB) {
+        	commandDBInsertTestReg();
+        	commandDBReadTestReg();
+        }
 
     }
 
@@ -197,5 +194,39 @@ public class commandRegister {
                 .register(get().getPluginContainer().getInstance(),
                         mobattackCommandSpec, "mobattack", "moba");
 
+    }
+    
+    public static void commandDBInsertTestReg() {
+    	
+        CommandSpec DBInsertTestCommandSpec = CommandSpec
+                .builder()
+                .description(
+                        Texts.of("Inserts the player's name into a table in the database"))
+                .executor(new commandExeDBInsertTest())
+                .permission("fugocraft.command.dbtest")
+                .build();
+
+        get().getGame()
+                .getCommandDispatcher()
+                .register(get().getPluginContainer().getInstance(),
+                        DBInsertTestCommandSpec, "dbinsert", "dbi");
+        
+    }
+    
+    public static void commandDBReadTestReg() {
+    	
+        CommandSpec DBReadTestCommandSpec = CommandSpec
+                .builder()
+                .description(
+                        Texts.of("Reads and outputs the table that was edited by /dbinsert"))
+                .executor(new commandExeDBReadTest())
+                .permission("fugocraft.command.dbtest")
+                .build();
+
+        get().getGame()
+                .getCommandDispatcher()
+                .register(get().getPluginContainer().getInstance(),
+                        DBReadTestCommandSpec, "dbread", "dbr");
+        
     }
 }
